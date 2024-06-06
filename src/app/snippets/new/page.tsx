@@ -1,10 +1,11 @@
+import { createSnippet } from '@/app/action/action'
 import React from 'react'
 
 export default function SnippetCreatePage() {
     return (
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
             <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">Créer ton Snippet !</h3>
-            <form action={""}>
+            <form action={createSnippet}>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="title" className="text-gray-700 font-semibold">Titre</label>
