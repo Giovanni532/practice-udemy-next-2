@@ -5,27 +5,40 @@ import { redirect } from "next/navigation";
 
 // Création de la fonction de creation de snippet
 export async function createSnippet(formState: { message: string }, formData: FormData) {
-    const title = formData.get('title');
-    const code = formData.get('code');
+    try {
+        const title = formData.get('title');
+        const code = formData.get('code');
 
-    if (typeof title !== 'string' || title.length < 3) {
-        return {
-            message: "Le titre n'est pas assez long"
+        if (typeof title !== 'string' || title.length < 3) {
+            return {
+                message: "Le titre n'est pas assez long"
+            }
+        }
+
+        if (typeof code !== 'string' || code.length < 10) {
+            return {
+                message: "Le code n'est pas assez long"
+            }
+        }
+
+        await db.snippet.create({
+            data: {
+                title,
+                code
+            }
+        });
+
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            return {
+                message: err.message
+            }
+        } else {
+            return {
+                message: 'Quelque chose a mal tourner ..'
+            }
         }
     }
-
-    if (typeof code !== 'string' || code.length < 10) {
-        return {
-            message: "Le code n'est pas assez long"
-        }
-    }
-
-    await db.snippet.create({
-        data: {
-            title,
-            code
-        }
-    });
 
     redirect("/")
 }
