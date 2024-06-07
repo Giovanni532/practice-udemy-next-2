@@ -30,6 +30,12 @@ export async function fetchSnippet(id: number) {
     return await db.snippet.findFirst({ where: { id } });
 }
 
+// Modification d'un snippet
 export async function editSnippet(id: number, code: string) {
+    await db.snippet.update({
+        where: { id },
+        data: { code }
+    });
 
+    redirect(`/snippets/${id}`)
 }
