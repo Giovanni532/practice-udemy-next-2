@@ -1,4 +1,4 @@
-import { fetchSnippet } from '@/app/action/action';
+import { deleteSnippet, fetchSnippet } from '@/app/action/action';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -11,6 +11,8 @@ interface SnippetDetail {
 
 export default async function SnippetDetail(props: SnippetDetail) {
     const snippet = await fetchSnippet(parseInt(props.params.id));
+
+    const deleteSnippetAction = deleteSnippet.bind(null, parseInt(props.params.id))
 
     if (!snippet) {
         return notFound();
@@ -25,11 +27,13 @@ export default async function SnippetDetail(props: SnippetDetail) {
                 <Link className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-600 transition" href={`/snippets/${snippet.id}/edit`}>
                     Modifier
                 </Link>
-                <button
-                    className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition"
-                >
-                    Supprimer
-                </button>
+                <form action={deleteSnippetAction}>
+                    <button
+                        className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition"
+                    >
+                        Supprimer
+                    </button>
+                </form>
             </div>
         </div>
     );
