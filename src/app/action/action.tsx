@@ -22,3 +22,14 @@ export async function createSnippet(formData: FormData) {
 export async function fetchSnippets() {
     return await db.snippet.findMany();
 }
+
+// Création de la fonction de récupération d'un snippet
+export async function fetchSnippet(id: number) {
+    // Permet un effet de loading lors de la recherche par id
+    await new Promise((r) => setTimeout(r, 1000));
+    return await db.snippet.findFirst({ where: { id } });
+}
+
+export async function editSnippet(id: number, code: string) {
+
+}
