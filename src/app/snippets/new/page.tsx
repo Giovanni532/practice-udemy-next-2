@@ -1,11 +1,16 @@
+"use client"
+
 import { createSnippet } from '@/app/action/action'
 import React from 'react'
+import { useFormState } from 'react-dom'
 
 export default function SnippetCreatePage() {
+    const [formState, action] = useFormState(createSnippet, { message: '' });
+
     return (
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
             <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">Créer ton Snippet !</h3>
-            <form action={createSnippet}>
+            <form action={action}>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="title" className="text-gray-700 font-semibold">Titre</label>
@@ -25,6 +30,7 @@ export default function SnippetCreatePage() {
                             placeholder="Entrer votre code ici"
                         />
                     </div>
+                    <div>{formState.message}</div>
                     <button
                         type='submit'
                         className='bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
