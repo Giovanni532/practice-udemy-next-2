@@ -1,4 +1,4 @@
-import { deleteSnippet, fetchSnippet } from '@/app/action/action';
+import { deleteSnippet, fetchSnippet, fetchSnippets } from '@/app/action/action';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -37,4 +37,16 @@ export default async function SnippetDetail(props: SnippetDetail) {
             </div>
         </div>
     );
+}
+
+// Permet de generer en cache la données
+
+export async function generateStaticParams() {
+    const snippets = await fetchSnippets();
+
+    return snippets.map(snippet => {
+        return {
+            id: snippet.id.toString()
+        }
+    })
 }

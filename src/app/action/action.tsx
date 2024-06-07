@@ -1,6 +1,7 @@
 "use server"
 
 import { db } from "@/db"
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 // Création de la fonction de creation de snippet
@@ -39,7 +40,7 @@ export async function createSnippet(formState: { message: string }, formData: Fo
             }
         }
     }
-
+    revalidatePath("/")
     redirect("/")
 }
 
@@ -62,6 +63,7 @@ export async function editSnippet(id: number, code: string) {
         data: { code }
     });
 
+    revalidatePath(`/snippets/${id}`)
     redirect(`/snippets/${id}`)
 }
 
@@ -71,5 +73,6 @@ export async function deleteSnippet(id: number) {
         where: { id },
     });
 
+    revalidatePath("/")
     redirect(`/`)
 }

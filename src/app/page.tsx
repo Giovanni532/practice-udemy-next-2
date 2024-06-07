@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { fetchSnippets } from "./action/action";
 
+// Permet de mettre le composant de maniere dynamic en production
+// export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const snippets = await fetchSnippets();
 
